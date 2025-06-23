@@ -8,6 +8,6 @@
 
 <div class="max-w-3xl mx-auto mt-8">
 	{#each data.products as product}
-		<ProductCard image={product.image} category={product.category} name={product.name} />
+		<ProductCard image={product.image} category={product.category} name={product.name} slug={product.name.toLowerCase()} />
 	{/each}
 </div>
