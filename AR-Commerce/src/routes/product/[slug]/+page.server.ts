@@ -14,5 +14,5 @@ export const load: PageServerLoad = async ({ params }) => {
   const filePath = path.join(productDir, file);
   const content = fs.readFileSync(filePath, 'utf-8');
   const { data, content: description } = matter(content);
-  return { product: { ...data, description } };
+  return { product: { ...data } };
 }; 
