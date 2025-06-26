@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  export let data;
+  import { page } from '$app/stores';
   type Product = {
     name: string;
     category: string;
@@ -8,8 +8,9 @@
     description: string;
     model?: string;
   };
-  const product = data.product as Product | undefined;
-  const modelFile = product?.model;
+  $: product = $page.data.product as Product | undefined;
+  $: modelFile = product?.model;
+  const environmentImage = '/AR-Assets/poly_haven_studio_1k.hdr';
 
   onMount(() => {
     if (typeof window !== 'undefined' && !window.customElements.get('model-viewer')) {
@@ -31,7 +32,7 @@
         <div class="mb-4 text-gray-700">{product.description}</div>
         {#if modelFile}
           <div class="w-full h-80 bg-gray-50 rounded flex items-center justify-center">
-            <model-viewer src={modelFile} alt={product.name} camera-controls auto-rotate style="width:100%;height:100%;background:transparent;" />
+            <model-viewer src={modelFile} alt={product.name} camera-controls auto-rotate ar environment-image={environmentImage} style="width:100%;height:100%;background:transparent;"></model-viewer>
           </div>
         {:else}
           <div class="w-full h-80 flex items-center justify-center text-gray-400 italic">

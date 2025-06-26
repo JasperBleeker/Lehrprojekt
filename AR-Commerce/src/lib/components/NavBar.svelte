@@ -1,14 +1,8 @@
 <script lang="ts">
   import Logo from '../svg/Logo.svelte';
   
-
+  export let products: { name: string; slug: string }[] = [];
   let menuOpen = false;
-  const products: { name: string; slug: string }[] = [
-    { name: 'Product 1', slug: 'product-1' },
-    { name: 'Product 2', slug: 'product-2' },
-    { name: 'Product 3', slug: 'product-3' },
-    { name: 'Product 4', slug: 'product-4' }
-  ];
 
   function toggleMenu() {
     menuOpen = !menuOpen;
@@ -23,7 +17,7 @@
   <div class="hidden md:flex gap-6">
     <a href="/" class="hover:text-blue-400 transition-colors">Home</a>
     {#each products as product}
-      <a href={`/products/${product.slug}`} class="hover:text-blue-400 transition-colors">{product.name}</a>
+      <a href={`/product/${product.slug}`} class="hover:text-blue-400 transition-colors">{product.name}</a>
     {/each}
   </div>
   <button class="md:hidden flex flex-col gap-1" on:click={toggleMenu} aria-label="Open menu">
@@ -38,7 +32,7 @@
   <div class="md:hidden bg-gray-900 text-white px-4 py-2 flex flex-col gap-4 shadow-lg z-50 absolute top-16 left-0 w-full animate-fade-in">
     <a href="/" class="hover:text-blue-400 transition-colors" on:click={() => menuOpen = false}>Home</a>
     {#each products as product}
-      <a href={`/products/${product.slug}`} class="hover:text-blue-400 transition-colors" on:click={() => menuOpen = false}>{product.name}</a>
+      <a href={`/product/${product.slug}`} class="hover:text-blue-400 transition-colors" on:click={() => menuOpen = false}>{product.name}</a>
     {/each}
   </div>
 {/if}

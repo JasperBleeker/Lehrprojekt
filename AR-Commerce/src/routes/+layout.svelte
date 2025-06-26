@@ -3,9 +3,9 @@
 	import NavBar from '$lib/components/NavBar.svelte';
 	import IndexHeader from '$lib/components/IndexHeader.svelte';
 
-	let { children } = $props();
+	let { data, children } = $props();
 </script>
 
-<NavBar />
+<NavBar products={data.navProducts.filter(Boolean) as { name: string; slug: string }[]} />
 
 {@render children()}
