@@ -26,9 +26,7 @@
   <div class="max-w-3xl mx-auto mt-8 p-4 bg-white rounded shadow">
     <div class="flex flex-col md:flex-row gap-8 items-center">
       <div class="flex-1">
-        <h1 class="text-3xl font-bold mb-2">{product.name}</h1>
-        <div class="text-lg text-gray-600 mb-2">Kategorie: {product.category}</div>
-        <div class="mb-4 text-gray-700">{product.description}</div>
+        
         {#if modelFile}
           <div class="w-full h-80 bg-gray-50 rounded flex items-center justify-center">
             <model-viewer src={modelFile} alt={product.name} poster={product.image} camera-controls auto-rotate ar environment-image={environmentImage} style="width:100%;height:100%;background:transparent;"></model-viewer>
@@ -38,6 +36,10 @@
             Kein 3D-Modell verfügbar.
           </div>
         {/if}
+        <h1 class="text-3xl font-bold mb-2">{product.name}</h1>
+        <p class="text-lg text-gray-600 mb-2">Kategorie: {product.category}</p>
+        <p class="mb-4 text-gray-700">{product.description}</p>
+
       </div>
     </div>
   </div>
