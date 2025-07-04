@@ -6,12 +6,9 @@ declare global {
 }
 
 const uri = MONGODB_URI;
-console.log('MONGODB_URI:', uri);
 if (!uri) {
   throw new Error('Please define the MONGODB_URI environment variable');
 }
-
-// const uri = 'mongodb://jasper:Jrja6ks9iJGcDB7L@192.168.178.111:27017/test'
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;

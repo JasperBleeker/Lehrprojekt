@@ -4,8 +4,8 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async () => {
   try {
     const client = await clientPromise;
-    const db = client.db('test'); // or your db name
-    const collection = db.collection('demo');
+    const db = client.db('ar-commerce'); // or your db name
+    const collection = db.collection('analytics');
 
     const docs = await collection.find().limit(5).toArray();
 
