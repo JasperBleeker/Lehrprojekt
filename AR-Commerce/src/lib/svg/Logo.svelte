@@ -2,7 +2,7 @@
 	let { class: className } = $props();
 </script>
 
-<a href="/" aria-label="Home" class={className}>
+
 	<svg xmlns="http://www.w3.org/2000/svg" width="44" height="48" viewBox="0 0 44 48" fill="none">
 		<g clip-path="url(#clip0_129_934)">
 			<path
@@ -60,4 +60,4 @@
 			</clipPath>
 		</defs>
 	</svg>
-</a>
+
