@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import ProductUsageStats from '$lib/components/ProductUsageStats.svelte';
 	import { page } from '$app/stores';
 	import ArIcon from '$lib/svg/ArIcon.svelte';
 	type Product = {
@@ -71,6 +72,26 @@
 		arStartTime = Date.now();
 		console.log('AR-Button pressed, session started');
 	}
+
+	// Analytics
+	let stats: any = null;
+	let productName = '';
+	let showStats = false;
+
+	$: productName = $page.data.product?.name;
+
+	onMount(() => {
+		if (productName) fetchStats(productName);
+	});
+
+	$: if (productName) {
+		if (typeof window !== 'undefined') fetchStats(productName);
+	}
+
+	async function fetchStats(name: string) {
+		const res = await fetch(`/api/analytics?product=${encodeURIComponent(name)}`);
+		stats = await res.json();
+	}
 </script>
 
 {#if product}
@@ -90,15 +111,15 @@
 							ar
 							environment-image={environmentImage}
 							style="width:100%;height:100%;background:transparent;"
-						><button
-						slot="ar-button"
-						class="ar-custom-btn"
-						on:click={handleCustomARButton}
-						aria-label="AR starten"
-					>
-						<ArIcon class="w-8 h-8" />
-					</button></model-viewer>
-						
+							><button
+								slot="ar-button"
+								class="ar-custom-btn"
+								on:click={handleCustomARButton}
+								aria-label="AR starten"
+							>
+								<ArIcon class="w-8 h-8" />
+							</button></model-viewer
+						>
 					</div>
 				{:else}
 					<div class="w-full h-80 flex items-center justify-center text-gray-400 italic">
@@ -108,6 +129,28 @@
 				<h1 class="text-3xl font-bold mb-2">{product.name}</h1>
 				<p class="text-lg text-gray-600 mb-2">Kategorie: {product.category}</p>
 				<p class="mb-4 text-gray-700">{product.description}</p>
+
+				{#if stats}
+					<div class="mt-6">
+						<button
+							class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded border border-gray-300 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center gap-2"
+							on:click={() => (showStats = !showStats)}
+							aria-expanded={showStats}
+						>
+							<span>{showStats ? '▼' : '▶'}</span>
+							<span>{showStats ? 'Interaktionsstatistiken ausblenden' : 'Interaktionsstatistiken anzeigen'}</span>
+						</button>
+						{#if showStats}
+							<div class="mt-4">
+								<ProductUsageStats
+									avgDuration={stats.avgDuration}
+									sessionCount={stats.sessionCount}
+									browserPercent={stats.browserPercent}
+								/>
+							</div>
+						{/if}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -117,32 +160,32 @@
 	</div>
 {/if}
 
+
 <style>
-.ar-custom-btn {
-	position: absolute;
-	bottom: 1.5rem;
-	right: 1.5rem;
-	background: white;
-	color: #2563eb; /* Tailwind blue-600 */
-	border: none;
-	border-radius: 50%;
-	width: 56px;
-	height: 56px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-	transition: box-shadow 0.2s, background 0.2s;
-	cursor: pointer;
-	z-index: 10;
-}
-.ar-custom-btn:hover, .ar-custom-btn:focus {
-	background: #f1f5f9;
-	box-shadow: 0 4px 16px rgba(37,99,235,0.15);
-	outline: none;
-}
-.ar-custom-btn svg {
-	display: block;
-	margin: 0 auto;
-}
+	.ar-custom-btn {
+		position: absolute;
+		bottom: 1.5rem;
+		right: 1.5rem;
+		background: white;
+		color: #2563eb; /* Tailwind blue-600 */
+		border: none;
+		border-radius: 50%;
+		width: 56px;
+		height: 56px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		transition:
+			box-shadow 0.2s,
+			background 0.2s;
+		cursor: pointer;
+		z-index: 10;
+	}
+	.ar-custom-btn:hover,
+	.ar-custom-btn:focus {
+		background: #f1f5f9;
+		box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+		outline: none;
+	}
 </style>
