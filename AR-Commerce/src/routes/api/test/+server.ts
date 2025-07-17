@@ -7,7 +7,7 @@ export const GET: RequestHandler = async () => {
     const db = client.db('ar-commerce'); // or your db name
     const collection = db.collection('analytics');
 
-    const docs = await collection.find().limit(5).toArray();
+    const docs = await collection.find().sort({ _id: -1 }).limit(10).toArray();
 
     return new Response(JSON.stringify(docs), {
       status: 200,
