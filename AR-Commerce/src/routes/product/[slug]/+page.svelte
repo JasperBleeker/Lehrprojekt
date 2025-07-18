@@ -3,6 +3,7 @@
 	import ProductUsageStats from '$lib/components/ProductUsageStats.svelte';
 	import { page } from '$app/stores';
 	import ArIcon from '$lib/svg/ArIcon.svelte';
+	import Arrow from '$lib/svg/Arrow.svelte';
 	type Product = {
 		name: string;
 		category: string;
@@ -95,11 +96,13 @@
 </script>
 
 {#if product}
-	<div class="max-w-3xl mx-auto mt-8 p-4 bg-white rounded shadow">
-		<div class="flex flex-col md:flex-row gap-8 items-center">
+	<div class="max-w-3xl mx-auto pt-20 p-4 mb-10 bg-white rounded shadow">
+		<div class="flex flex-col md:flex-row gap-8">
 			<div class="flex-1">
 				{#if modelFile}
-					<div class="w-full h-80 bg-gray-50 rounded flex items-center justify-center relative">
+					<div
+						class="w-full h-80 mb-8 bg-gray-50 rounded flex items-center justify-center relative"
+					>
 						<model-viewer
 							bind:this={modelViewerEl}
 							src={modelFile}
@@ -126,19 +129,26 @@
 						Kein 3D-Modell verfügbar.
 					</div>
 				{/if}
-				<h1 class="text-3xl font-bold mb-2">{product.name}</h1>
+				<h1 class="text-3xl text-brandblack font-bold mb-2">{product.name}</h1>
 				<p class="text-lg text-gray-600 mb-2">Kategorie: {product.category}</p>
 				<p class="mb-4 text-gray-700">{product.description}</p>
 
 				{#if stats}
 					<div class="mt-6">
 						<button
-							class="px-3 py-1.5 bg-gray-100 text-gray-700 rounded border border-gray-300 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center gap-2"
+							class="px-3 py-1.5 bg-gray-100 text-brandblack rounded border border-gray-300 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center gap-2"
 							on:click={() => (showStats = !showStats)}
 							aria-expanded={showStats}
 						>
-							<span>{showStats ? '▼' : '▶'}</span>
-							<span>{showStats ? 'Interaktionsstatistiken ausblenden' : 'Interaktionsstatistiken anzeigen'}</span>
+							<Arrow
+								class="w-4 h-4 transition-transform duration-200 text-brandblack"
+								style={`transform: rotate(${showStats ? 90 : 0}deg);`}
+							/>
+							<span
+								>{showStats
+									? 'Interaktionsstatistiken ausblenden'
+									: 'Interaktionsstatistiken anzeigen'}</span
+							>
 						</button>
 						{#if showStats}
 							<div class="mt-4">
@@ -160,14 +170,12 @@
 	</div>
 {/if}
 
-
 <style>
 	.ar-custom-btn {
 		position: absolute;
-		bottom: 1.5rem;
-		right: 1.5rem;
+		bottom: 1rem;
+		right: 1rem;
 		background: white;
-		color: #2563eb; /* Tailwind blue-600 */
 		border: none;
 		border-radius: 50%;
 		width: 56px;
