@@ -10,6 +10,7 @@
 		image: string;
 		description: string;
 		model?: string;
+		placement: string;
 	};
 	$: product = $page.data.product as Product | undefined;
 	$: modelFile = product?.model;
@@ -110,7 +111,7 @@
 							poster={product.image}
 							camera-controls
 							auto-rotate
-							ar-placement="floor"
+							ar-placement={product.placement}
 							ar
 							environment-image={environmentImage}
 							style="width:100%;height:100%;background:transparent;"
