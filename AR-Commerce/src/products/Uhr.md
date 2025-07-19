@@ -4,5 +4,6 @@ category: Wohnen
 image: /img/Clockfreigestellt.png
 description: Eine stilvolle Wanduhr für jedes Zimmer.
 model: /3D-Models/Clock.glb
+modelIOS: /3D-Models/Clock2.usdz
 placement: wall
 --- 

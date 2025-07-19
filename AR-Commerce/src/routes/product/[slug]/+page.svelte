@@ -10,10 +10,12 @@
 		image: string;
 		description: string;
 		model?: string;
+		modelIOS?: string;
 		placement: string;
 	};
 	$: product = $page.data.product as Product | undefined;
 	$: modelFile = product?.model;
+	$: modelFileIOS = product?.modelIOS;
 	const environmentImage = '/AR-Assets/poly_haven_studio_1k.hdr';
 
 	let arStartTime = 0;
@@ -107,10 +109,12 @@
 						<model-viewer
 							bind:this={modelViewerEl}
 							src={modelFile}
+							ios-src={modelFileIOS}
 							alt={product.name}
 							poster={product.image}
 							camera-controls
 							auto-rotate
+							ar-modes="scene-viewer quick-look"
 							ar-placement={product.placement}
 							ar
 							environment-image={environmentImage}
