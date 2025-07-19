@@ -57,7 +57,7 @@ AR-Commerce ist eine Webanwendung, die im Rahmen meines Bachelorprojekts entstan
 
 ## Nutzung
 - Im Katalog ein Produkt auswählen.
-- Auf der Produktseite das 3D-Modell in AR starten (AR-Button).
+- Auf der Produktseite das 3D-Modell in AR starten (AR-Button) <- Nur auf unterstützen Mobilgeräten und Browser.
 - Interaktionsstatistiken können auf der Produktseite angezeigt werden.
 
 ## Verzeichnisstruktur (Auszug)
@@ -82,9 +82,6 @@ AR-Commerce/
 
 Aktuell ist das Projekt nicht für externe Beiträge geöffnet.
 
-## Lizenz
-
-© Jasper Bleeker, 2025. Alle Rechte vorbehalten.
 
 ## Roadmap
 
@@ -102,3 +99,8 @@ Denkbare Erweiterungen für die Zukunft:
   Verwaltung von Produkten, Nutzern und Statistiken über ein eigenes Dashboard.
 - **Mehrsprachigkeit:**  
   Unterstützung für weitere Sprachen (z.B. Englisch).
+
+
+## Lizenz
+
+© Jasper Bleeker, 2025. Alle Rechte vorbehalten.
