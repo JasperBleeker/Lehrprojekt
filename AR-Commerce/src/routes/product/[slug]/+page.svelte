@@ -316,7 +316,6 @@
 						{#if arStats}
 							<ProductUsageStats
 								avgDuration={arStats.avgDuration}
-								sessionCount={arStats.sessionCount}
 								browserPercent={arStats.browserPercent}
 								type="ar"
 								totalViews={arStats.totalViews}
@@ -326,7 +325,6 @@
 						{#if staticImageStats}
 							<ProductUsageStats
 								avgDuration={staticImageStats.avgDuration}
-								sessionCount={staticImageStats.sessionCount}
 								browserPercent={staticImageStats.browserPercent}
 								type="static-image"
 								totalViews={staticImageStats.totalViews}

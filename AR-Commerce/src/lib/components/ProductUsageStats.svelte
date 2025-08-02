@@ -1,6 +1,5 @@
 <script lang="ts">
     export let avgDuration: number; // in Sekunden
-    export let sessionCount: number;
     export let browserPercent: Record<string, number>;
     export let type: string = 'ar'; // 'ar' or 'static-image'
     export let totalViews: number = 0;
