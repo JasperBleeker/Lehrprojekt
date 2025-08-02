@@ -8,7 +8,9 @@ export const GET: RequestHandler = async ({ url }) => {
     const collection = db.collection('analytics');
 
     const productName = url.searchParams.get('product');
-    const filter: Record<string, unknown> = { arDuration: { $exists: true } };
+    const analyticsType = url.searchParams.get('type') || 'ar'; // Default to AR analytics
+    
+    const filter: Record<string, unknown> = { type: analyticsType };
 
     if (productName) {
       filter.product = productName;
@@ -20,7 +22,8 @@ export const GET: RequestHandler = async ({ url }) => {
       return new Response(JSON.stringify({
         avgDuration: 0,
         sessionCount: 0,
-        browserPercent: {}
+        browserPercent: {},
+        type: analyticsType
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
@@ -28,8 +31,6 @@ export const GET: RequestHandler = async ({ url }) => {
     }
 
     const sessionCount = logs.length;
-    const totalDuration = logs.reduce((acc, log) => acc + (log.arDuration || 0), 0);
-    const avgDuration = totalDuration / sessionCount / 1000; // Sekunden
 
     function parseBrowser(ua: string = ''): string {
       ua = ua.toLowerCase();
@@ -42,7 +43,7 @@ export const GET: RequestHandler = async ({ url }) => {
 
     const browserCounts = new Map<string, number>();
     for (const log of logs) {
-      const browser = parseBrowser(log.userAgent);
+      const browser = parseBrowser(log.userAgent || '');
       browserCounts.set(browser, (browserCounts.get(browser) || 0) + 1);
     }
 
@@ -51,10 +52,33 @@ export const GET: RequestHandler = async ({ url }) => {
       browserPercent[browser] = parseFloat(((count / sessionCount) * 100).toFixed(1));
     }
 
+    // Calculate different metrics based on type
+    let avgDuration = 0;
+    let totalViews = sessionCount;
+    let uniqueSessions = sessionCount;
+    
+    if (analyticsType === 'ar') {
+      const totalDuration = logs.reduce((acc, log) => acc + (log.arDuration || 0), 0);
+      avgDuration = totalDuration / sessionCount / 1000; // Convert to seconds
+      // For AR, calculate unique sessions
+      const uniqueSessionIds = new Set(logs.map(log => log.sessionId));
+      uniqueSessions = uniqueSessionIds.size;
+      totalViews = sessionCount; // Total AR interactions
+    } else if (analyticsType === 'static-image') {
+      // For static images, calculate unique sessions
+      const uniqueSessionIds = new Set(logs.map(log => log.sessionId));
+      uniqueSessions = uniqueSessionIds.size;
+      totalViews = sessionCount; // Total interactions
+      avgDuration = 0; // No duration tracking for static images
+    }
+
     return new Response(JSON.stringify({
       avgDuration,
       sessionCount,
-      browserPercent
+      browserPercent,
+      type: analyticsType,
+      totalViews,
+      uniqueSessions
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
@@ -62,6 +86,9 @@ export const GET: RequestHandler = async ({ url }) => {
 
   } catch (err) {
     console.error(err);
-    return new Response('Error connecting to MongoDB: ' + (err instanceof Error ? err.message : String(err)), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: 'Error connecting to MongoDB', message: err instanceof Error ? err.message : String(err) }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 };
