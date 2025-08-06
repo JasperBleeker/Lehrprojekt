@@ -2,6 +2,10 @@
 
 AR-Commerce ist eine Webanwendung, die im Rahmen meines Bachelorprojekts entstanden ist. Ziel ist es, Produkte mittels Augmented Reality (AR) direkt in der realen Umgebung zu visualisieren und zu testen. Die Anwendung wurde im Kontext meiner Bachelor-Thesis entwickelt, um die Potenziale und Herausforderungen von AR im E-Commerce zu untersuchen.
 
+## Live-Version
+Die live Version ist unter folgendem Link erreichbar:
+[AR-Commerce](https://ar-commerce.jasperbleeker.ch/)
+
 ## Features
 
 - **Produktvisualisierung in AR:** Nutzer:innen können verschiedene Produkte (z.B. Möbel, Pflanzen, Uhren, Küchengeräte) als 3D-Modelle in ihrer Umgebung platzieren.
