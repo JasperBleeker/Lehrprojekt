@@ -5,6 +5,7 @@
 	import ArIcon from '$lib/svg/ArIcon.svelte';
 	import ThreeDIcon from '$lib/svg/ThreeDIcon.svelte';
 	import Arrow from '$lib/svg/Arrow.svelte';
+	
 	type Product = {
 		name: string;
 		category: string;
@@ -15,7 +16,10 @@
 		placement: string;
 		staticImages?: string[];
 	};
+	
 	$: product = $page.data.product as Product | undefined;
+	$: pageTitle = product ? `${product.name} - AR-Commerce` : 'Produkt - AR-Commerce';
+	$: pageDescription = product ? `Entdecke ${product.name} in AR. Visualisiere das 3D-Modell in deiner Umgebung mit Augmented Reality.` : 'Produktdetails und AR-Visualisierung';
 	$: modelFile = product?.model;
 	$: modelFileIOS = product?.modelIOS;
 	const environmentImage = '/AR-Assets/poly_haven_studio_1k.hdr';
@@ -219,6 +223,12 @@
 		staticImageStats = await res.json();
 	}
 </script>
+
+<svelte:head>
+	<title>{pageTitle}</title>
+	<meta name="description" content={pageDescription} />
+	<meta name="keywords" content="AR, Augmented Reality, 3D-Modell, {product?.name || 'Produkt'}, AR-Commerce" />
+</svelte:head>
 
 {#if product}
 	<div class="max-w-3xl mx-auto p-4 mb-40 bg-white rounded shadow md:mt-20">

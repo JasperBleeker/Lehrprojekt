@@ -4,6 +4,12 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>AR-Commerce - Entdecke die Zukunft des Einkaufens</title>
+	<meta name="description" content="Entdecke die Zukunft des Einkaufens mit innovativer AR-Technologie. Visualisiere Produkte in deiner Umgebung vor dem Kauf." />
+	<meta name="keywords" content="AR, Augmented Reality, E-Commerce, 3D-Modelle, Produktvisualisierung" />
+</svelte:head>
+
 <IndexHeader />
 
 <div class="max-w-3xl mx-auto mt-8 min-h-[70vh]">
