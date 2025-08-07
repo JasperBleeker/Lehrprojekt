@@ -44,7 +44,7 @@
 		<!-- Bottom Bar -->
 		<div class="border-t border-secondary/30 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
 			<p class="text-brandwhite/60 text-sm">
-				© 2024 AR-Commerce. Alle Rechte vorbehalten.
+				© 2025 AR-Commerce. Alle Rechte vorbehalten.
 			</p>
 			<div class="flex space-x-6 mt-4 md:mt-0">
 				<a href="/impressum" class="text-brandwhite/60 hover:text-brandwhite text-sm transition-colors">Impressum</a>
