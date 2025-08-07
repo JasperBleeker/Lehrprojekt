@@ -35,11 +35,13 @@
 	</a>
 	<div class="hidden md:flex gap-6">
 		<a href="/" class="hover:text-blue-400 transition-colors">Home</a>
+		<a href="/about" class="hover:text-blue-400 transition-colors">Über</a>
 		{#each products as product}
 			<a href={`/product/${product.slug}`} class="hover:text-blue-400 transition-colors"
 				>{product.name}</a
 			>
 		{/each}
+		
 	</div>
 	<button class="md:hidden flex flex-col gap-1.25 box-content items-center justify-center" on:click={toggleMenu} aria-label="Open menu">
 		<span
@@ -62,6 +64,7 @@
 		<a href="/" class="hover:text-blue-400 transition-colors text-2xl" on:click={() => (menuOpen = false)}
 			>Home</a
 		>
+		<a href="/about" class="hover:text-blue-400 transition-colors text-2xl" on:click={() => (menuOpen = false)}>Über</a>
 		{#each products as product}
 			<a
 				href={`/product/${product.slug}`}
@@ -69,6 +72,7 @@
 				on:click={() => (menuOpen = false)}>{product.name}</a
 			>
 		{/each}
+		
 	</div>
 {/if}
 
