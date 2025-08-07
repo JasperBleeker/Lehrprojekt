@@ -221,7 +221,7 @@
 </script>
 
 {#if product}
-	<div class="max-w-3xl mx-auto pt-20 p-4 mb-10 bg-white rounded shadow">
+	<div class="max-w-3xl mx-auto p-4 mb-40 bg-white rounded shadow md:mt-20">
 		<!-- Swiper Galerie -->
 		{#if product.staticImages && product.staticImages.length > 0}
 			<div class="swiper w-full mb-8 rounded">
@@ -254,7 +254,7 @@
 
 		<!-- Modal für 3D-Ansicht -->
 		{#if show3DModal}
-			<div class="fixed inset-0 bg-brandwhite/70 backdrop-blur-sm flex items-center justify-center z-50">
+			<div class="fixed inset-0 bg-brandwhite/70 backdrop-blur-sm flex items-center justify-center z-40">
 				<div class="bg-white rounded shadow-lg p-4 relative max-w-3xl w-full">
 					<button class="absolute top-2 right-2 text-2xl" on:click={() => (show3DModal = false)}
 						>&times;</button
