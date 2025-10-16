@@ -185,6 +185,7 @@
 		}
 	}
 
+
 	// Analytics
 	let arStats: any = null;
 	let staticImageStats: any = null;
