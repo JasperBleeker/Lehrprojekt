@@ -1,18 +1,38 @@
 import { MongoClient } from 'mongodb';
-import { MONGODB_URI } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import fs from 'fs';
 
-// Prefer Docker secret if available, otherwise use environment variable
-let uri = MONGODB_URI;
-try {
-  uri = fs.readFileSync('/run/secrets/mongo_uri', 'utf8').trim();
-} catch (err) {
-  // Ignore if file does not exist
+function readIfExists(p?: string | null): string | null {
+  if (!p) return null;
+  try {
+    if (fs.existsSync(p)) {
+      const v = fs.readFileSync(p, 'utf8').trim();
+      return v || null;
+    }
+  } catch {
+    // ignore
+  }
+  return null;
 }
 
+// 1) Secrets vorziehen: erst per Env-Zeiger, dann gängige Default-Pfade
+const secretCandidates = [
+  env.MONGODB_URI_FILE,            // z.B. /run/secrets/mongodb_uri
+  '/run/secrets/mongodb_uri',
+  '/run/secrets/mongo_uri'
+];
+
+// Prefer Docker secret if available, otherwise use environment variable
+let uri =
+  secretCandidates.map(readIfExists).find(Boolean) ||
+  env.MONGODB_URI ||
+  null;
+
 if (!uri) {
-  throw new Error('Please define the MONGODB_URI environment variable or Docker secret');
+  // Nichts Leaky-Loggen. Nur klar failen.
+  throw new Error('MONGODB_URI ist nicht gesetzt (weder Secret noch Env).');
 }
+
 
 declare global {
   // eslint-disable-next-line no-var
